@@ -88,6 +88,34 @@ One-way data binding is when, data can be access from component into its corresp
                   Event binding:: (data)="expression"
 
 
+
+#### String interpolation
+
+Example:
+```typescript
+export class ProductListComponent {
+    product = {
+        name: 'iPhone XR',
+        price: 789,
+        color: 'Black',
+        discount: 5.5
+    };
+
+    getDiscountedPrice(): number {
+        return this.product.price - (this.product.price * this.product.discount / 100);
+    }
+}
+
+```
+
+```html
+<p>Product name: {{product.name}}</p>
+<p>Original price: {{product.price}}</p>
+<p>Product color: {{product.color}}</p>
+<p>Discounted price: {{getDiscountedPrice()}}</p>
+
+```
+
 - Type 2: Two Way Data Binding
 Component to View View to Component
 
