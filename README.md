@@ -1,4 +1,4 @@
-# Angular Journey
+# Angular Journey SK027
 
 ## How Angular project works ?
 
@@ -42,7 +42,7 @@ Component <---------------------------------> View Template
 (UI logic) (HTML Page)
 
 - Example: How data binding is done in between component and template
-- Component
+- Component UI logic
 
 ```typescript
 export class MyComponent{
