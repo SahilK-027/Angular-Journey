@@ -310,6 +310,39 @@ Component: The most common type of directive. It allows you to create reusable, 
     </div>
     ```
 
+    -[ngClass]
+
+    The [ngClass] directive in Angular is used to conditionally apply CSS classes to HTML elements based on certain conditions or expressions. It provides a way to dynamically manage the classes of an element.
+
+    - Example:
+
+    ```html
+    <!-- app.component.html -->
+    <button
+      [ngClass]="{ 'disabled-button': isButtonDisabled }"
+      [disabled]="isButtonDisabled"
+    >
+      Click me
+    </button>
+    ```
+
+    ```typescript
+    export class AppComponent {
+        isButtonDisabled: boolean = false;
+
+        // Some logic to determine when the button should be disabled
+        updateButtonState() {
+            // Example: Disable the button if a condition is met
+            this.isButtonDisabled = /* some condition */;
+        }
+    }
+    ```
+
+    In this example:
+
+    - If isButtonDisabled is true, the CSS class disabled-button will be applied to the button, providing a visual indication that it is disabled.
+    - The [disabled] attribute is bound to the isButtonDisabled variable, so if isButtonDisabled is true, the button will be disabled; otherwise, it will be enabled.
+
 4.  Custom Directives:
 
 You can create your own custom directives to encapsulate behavior and reuse it across your application.
