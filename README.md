@@ -431,3 +431,25 @@ export class ParentComponent {
 ### Communication between non related components
 
 <img width="1437" alt="Screenshot 2023-12-02 at 7 15 20 PM" src="https://github.com/SahilK-027/Angular-Journey/assets/104154041/cfe6b846-0d42-47a6-87b2-e3a800ac7494">
+
+> **Note**
+> We can achieve this by much simpler way using Services in Angular
+
+## Template reference variables
+
+Template reference variables in Angular allow you to create a reference to an element in the template and then use that reference in the component code. They are denoted by a hash symbol (#) followed by a name.
+
+Template reference variables in Angular allow you to create a reference to an element in the template and then use that reference in the component code. They are denoted by a hash symbol (#) followed by a name.
+
+Here's a basic example:
+
+```html
+<!-- app.component.html -->
+<input type="text" #myInput />
+<button (click)="logInputValue(myInput.value)">Log Input Value</button>
+```
+
+In this example:
+
+- #myInput is a template reference variable assigned to the input element.
+- When the button is clicked, the (click) event triggers the logInputValue method in the component, passing the value of the input using myInput.value.
