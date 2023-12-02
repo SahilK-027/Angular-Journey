@@ -163,6 +163,8 @@ In Angular, event binding is a mechanism that allows you to respond to user even
 
 For event binding wrap the event with (). Angular supports a variety of events such as (click), (keyup), (change), etc
 
+In Angular, the (change) event binding is used to capture and respond to changes in an input element, such as text inputs, checkboxes, and select dropdowns. The (change) event is triggered when the user interacts with the input, and the value of the input changes.
+
 - Example
 
 ```typescript
@@ -297,45 +299,46 @@ Component: The most common type of directive. It allows you to create reusable, 
 
 3.  Attribute Directives:
 
-    -[ngStyle]
+    - [ngStyle]
 
     The ngStyle directive in Angular is another structural directive that allows you to dynamically set inline styles for HTML elements based on expressions in your component. It gives you the flexibility to conditionally apply styles depending on certain conditions or dynamic data.
 
-    - Example:
+        - Example:
 
-    ```html
-    <!-- app.component.html -->
-    <div [ngStyle]="{ 'color': isConditionTrue ? 'green' : 'red' }">
-      {{isConditionTrue ? 'True' : 'False'}}
-    </div>
-    ```
+        ```html
+        <!-- app.component.html -->
+        <div [ngStyle]="{ 'color': isConditionTrue ? 'green' : 'red' }">
+        {{isConditionTrue ? 'True' : 'False'}}
+        </div>
+        ```
 
-    -[ngClass]
+    - [ngClass]
 
     The [ngClass] directive in Angular is used to conditionally apply CSS classes to HTML elements based on certain conditions or expressions. It provides a way to dynamically manage the classes of an element.
 
-    - Example:
+        - Example:
 
-    ```html
-    <!-- app.component.html -->
-    <button
-      [ngClass]="{ 'disabled-button': isButtonDisabled }"
-      [disabled]="isButtonDisabled"
-    >
-      Click me
-    </button>
-    ```
+        ```html
+        <!-- app.component.html -->
+        <button
+        [ngClass]="{ 'disabled-button': isButtonDisabled }"
+        [disabled]="isButtonDisabled"
+        >
+        Click me
+        </button>
+        ```
 
-    ```typescript
-    export class AppComponent {
-        isButtonDisabled: boolean = false;
+        ```typescript
+        export class AppComponent {
+            isButtonDisabled: boolean = false;
 
-        // Some logic to determine when the button should be disabled
-        updateButtonState() {
-            // Example: Disable the button if a condition is met
-            this.isButtonDisabled = /* some condition */;
+            // Some logic to determine when the button should be disabled
+            updateButtonState() {
+                // Example: Disable the button if a condition is met
+                this.isButtonDisabled = /* some condition */;
+            }
         }
-    }
+
     ```
 
     In this example:
@@ -343,6 +346,86 @@ Component: The most common type of directive. It allows you to create reusable, 
     - If isButtonDisabled is true, the CSS class disabled-button will be applied to the button, providing a visual indication that it is disabled.
     - The [disabled] attribute is bound to the isButtonDisabled variable, so if isButtonDisabled is true, the button will be disabled; otherwise, it will be enabled.
 
+    ```
+
 4.  Custom Directives:
 
 You can create your own custom directives to encapsulate behavior and reuse it across your application.
+
+## Custom Property binding
+
+### Parent component to child component communication (use @input())
+
+                    Custom property binding
+
+Parent Component ------------------------------------------------------------------> Child Compo
+@Input() decorator
+
+Parent Compo
+
+```html
+<parent *ngFor="let fruit of listOfFruits" [fruit]="fruit"> </parent>
+```
+
+Child Compo
+
+```typescript
+export class ChildComponent {
+  // Initial value for the dynamicName
+  @input() fruit;
+}
+```
+
+### Child component to parent component communication (use @output())
+
+In Angular, you can achieve communication from a child component to a parent component using the @Output() decorator along with an EventEmitter. This allows the child component to emit events that the parent component can listen to.
+
+- Example
+
+Child Component (child.component.ts)
+
+```typescript
+import { Component, EventEmitter, Output } from "@angular/core";
+
+@Component({
+  selector: "app-child",
+  template: ` <button (click)="sendMessage()">Send Message to Parent</button> `,
+})
+export class ChildComponent {
+  @Output() messageEvent = new EventEmitter<string>();
+
+  sendMessage() {
+    const message = "Hello from the child component!";
+    this.messageEvent.emit(message);
+  }
+}
+```
+
+- The @Output() decorator is used to create an EventEmitter named messageEvent. This EventEmitter will emit events that the parent component can subscribe to.
+- The sendMessage() method is triggered when the button is clicked. It emits a message using this.messageEvent.emit(message).
+
+Parent Component (parent.component.ts)
+
+```typescript
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-parent",
+  template: `
+    <app-child (messageEvent)="receiveMessage($event)"></app-child>
+    <p>{{ receivedMessage }}</p>
+  `,
+})
+export class ParentComponent {
+  receivedMessage: string = "";
+
+  receiveMessage(message: string) {
+    this.receivedMessage = message;
+  }
+}
+```
+
+- The ParentComponent listens for the (messageEvent) emitted by the ChildComponent.
+- When the event is received, the receiveMessage($event) method is called, which updates the receivedMessage property in the parent component.
+
+### Communication between non related components
