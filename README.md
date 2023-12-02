@@ -193,3 +193,40 @@ export class AppComponent {
   Component to View View to Component
 
 Two-way data binding binds data from component class to view template and view template to component class. It is a combination of property binding & event binding.
+
+#### Property Binding + Event Binding
+
+Two-way data binding in Angular is a combination of property binding and event binding. It allows data to flow in both directions: from the component class to the view template (property binding) and from the view template to the component class (event binding). This is often used with [(ngModel)], which is a built-in directive in Angular.
+
+Here's an example demonstrating two-way data binding:
+
+```typescript
+export class AppComponent {
+  // Initial value for the dynamicName
+  dynamicName: string = "Not entered name";
+
+  // Method to be called on input change
+  onNameChange(newName: string): void {
+    // Update dynamicName with the new value
+    this.dynamicName = newName;
+  }
+}
+```
+
+```html
+<!-- Input tag with event binding for input event -->
+<!-- one way
+<input
+  placeholder="Enter your name"
+  (input)="onNameChange($event.target.value)"
+/> -->
+
+<!-- Or the other -->
+<input
+  placeholder="Enter your name"
+  [(ngModel)]="dynamicName"
+/>
+
+<!-- Paragraph with string interpolation -->
+<p>{{ dynamicName }}</p>
+```
