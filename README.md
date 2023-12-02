@@ -429,3 +429,5 @@ export class ParentComponent {
 - When the event is received, the receiveMessage($event) method is called, which updates the receivedMessage property in the parent component.
 
 ### Communication between non related components
+
+<img width="1437" alt="Screenshot 2023-12-02 at 7 15 20 PM" src="https://github.com/SahilK-027/Angular-Journey/assets/104154041/cfe6b846-0d42-47a6-87b2-e3a800ac7494">
