@@ -242,33 +242,61 @@ In Angular, directives are a category of functionalities that allow you to exten
 
 Component: The most common type of directive. It allows you to create reusable, encapsulated components with their own logic, templates, and styles. Components are the building blocks of Angular applications.
 
-2. Structural Directives:
-    - *ngFor
-    ngFor is a structural directive in Angular that is used for rendering a template for each item in a collection. It's commonly used for iterating over arrays or lists to generate dynamic content in the view.
+2.  Structural Directives:
 
-    - Example: 
-    Simple
+    - *ngFor
+      ngFor is a structural directive in Angular that is used for rendering a template for each item in a collection. It's commonly used for iterating over arrays or lists to generate dynamic content in the view.
+
+    - Example:
+      Simple
+
     ```html
-    <div *ngFor = "let fruit of ['Apple', 'Mango', 'orange', 'grapes']">
-        <p> Fruit name: {{ fruit }}</p>
+    <div *ngFor="let fruit of ['Apple', 'Mango', 'orange', 'grapes']">
+      <p>Fruit name: {{ fruit }}</p>
     </div>
     ```
 
     TypeScript + HTML
+
     ```typescript
     export class AppComponent {
-    // Initial value for the dynamicName
-        listOfFruits: string[] = ['Apple', 'Mango', 'orange', 'grapes'];
+      // Initial value for the dynamicName
+      listOfFruits: string[] = ["Apple", "Mango", "orange", "grapes"];
     }
     ```
+
     ```html
-    <div *ngFor = "let fruit of listOfFruits">
-        <p> Fruit name: {{ fruit }}</p>
+    <div *ngFor="let fruit of listOfFruits">
+      <p>Fruit name: {{ fruit }}</p>
     </div>
     ```
 
-3. Attribute Directives:
+    - *ngIf
+      *ngIf directive, it is a structural directive in Angular. This directive is used to conditionally render or remove elements from the DOM (Document Object Model) based on a certain expression's truthiness.
 
-4. Custom Directives:
+      Here's a basic example of how you might use `*ngIf` in an Angular component
+
+      - Simple example
+
+      ```html
+      <div *ngIf="isConditionTrue">
+        This content will only be displayed if isConditionTrue is true.
+      </div>
+      ```
+
+      You can also use \*ngIf with an "else" clause:
+
+      ```html
+      <div *ngIf="isConditionTrue; else elseBlock">
+        This content will be displayed if isConditionTrue is true.
+      </div>
+      <ng-template #elseBlock>
+        This content will be displayed if isConditionTrue is false.
+      </ng-template>
+      ```
+
+3.  Attribute Directives:
+
+4.  Custom Directives:
 
 You can create your own custom directives to encapsulate behavior and reuse it across your application.
