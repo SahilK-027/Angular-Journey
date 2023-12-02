@@ -243,6 +243,29 @@ In Angular, directives are a category of functionalities that allow you to exten
 Component: The most common type of directive. It allows you to create reusable, encapsulated components with their own logic, templates, and styles. Components are the building blocks of Angular applications.
 
 2. Structural Directives:
+    - *ngFor
+    ngFor is a structural directive in Angular that is used for rendering a template for each item in a collection. It's commonly used for iterating over arrays or lists to generate dynamic content in the view.
+
+    - Example: 
+    Simple
+    ```html
+    <div *ngFor = "let fruit of ['Apple', 'Mango', 'orange', 'grapes']">
+        <p> Fruit name: {{ fruit }}</p>
+    </div>
+    ```
+
+    TypeScript + HTML
+    ```typescript
+    export class AppComponent {
+    // Initial value for the dynamicName
+        listOfFruits: string[] = ['Apple', 'Mango', 'orange', 'grapes'];
+    }
+    ```
+    ```html
+    <div *ngFor = "let fruit of listOfFruits">
+        <p> Fruit name: {{ fruit }}</p>
+    </div>
+    ```
 
 3. Attribute Directives:
 
