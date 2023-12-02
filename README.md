@@ -222,11 +222,30 @@ export class AppComponent {
 /> -->
 
 <!-- Or the other -->
-<input
-  placeholder="Enter your name"
-  [(ngModel)]="dynamicName"
-/>
+<input placeholder="Enter your name" [(ngModel)]="dynamicName" />
 
 <!-- Paragraph with string interpolation -->
 <p>{{ dynamicName }}</p>
 ```
+
+[(ngModel)]="dynamicName" is Angular's two-way data binding syntax. It binds the value of the input element to the dynamicName property in the component class.
+
+As the user types in the input field, the dynamicName property is updated automatically, and the paragraph below reflects the changes instantly.
+
+Two-way data binding is a powerful feature in Angular as it simplifies the synchronization of data between the component and the view. It enhances the developer experience by reducing the need for explicit event handling for input changes. However, it's essential to note that for two-way data binding to work, you need to import the FormsModule from @angular/forms in your Angular module.
+
+## Angular Directives
+
+In Angular, directives are a category of functionalities that allow you to extend the behavior of HTML elements or create reusable components. They are markers on a DOM element that tell Angular to do something to that element or its content. Angular provides several built-in directives, and you can also create custom directives.
+
+1. Component Directives:
+
+Component: The most common type of directive. It allows you to create reusable, encapsulated components with their own logic, templates, and styles. Components are the building blocks of Angular applications.
+
+2. Structural Directives:
+
+3. Attribute Directives:
+
+4. Custom Directives:
+
+You can create your own custom directives to encapsulate behavior and reuse it across your application.
