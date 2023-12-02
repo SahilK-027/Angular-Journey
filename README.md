@@ -59,53 +59,52 @@ export class MyComponent{
 
 ```html
 <div class="header">
-    <div>{{ title }}</div>
-    <div> {{ message }}</div>
-    <button （click）="onclick()">Click Me</button>
-    <div [hidden]="display">
-        <p>Display this content</p>
-    </div>
+  <div>{{ title }}</div>
+  <div>{{ message }}</div>
+  <button （click）="onclick()">Click Me</button>
+  <div [hidden]="display">
+    <p>Display this content</p>
+  </div>
 </div>
 ```
 
 ### Types of Data Binding in Angular
 
-- Type 1: One Way Data Binding 
-Component to View OR View to Component
+- Type 1: One Way Data Binding
+  Component to View OR View to Component
 
 One-way data binding is when, data can be access from component into its corresponding view or vice versa.
-
 
     - Type 1.1: Component to View
                   Data flow from component to class view template
         Component ------------------------------------------------------------------> View Template
                   String interpolation: {{data}}
                   Property binding: [property] = data
-    
+
     - Type 1.2: View to Component
                     Data flow from view template to component class
         Component <------------------------------------------------------------------ View Template
                   Event binding:: (data)="expression"
 
-
-
 #### String interpolation
 
 Example:
+
 ```typescript
 export class ProductListComponent {
-    product = {
-        name: 'iPhone XR',
-        price: 789,
-        color: 'Black',
-        discount: 5.5
-    };
+  product = {
+    name: "iPhone XR",
+    price: 789,
+    color: "Black",
+    discount: 5.5,
+  };
 
-    getDiscountedPrice(): number {
-        return this.product.price - (this.product.price * this.product.discount / 100);
-    }
+  getDiscountedPrice(): number {
+    return (
+      this.product.price - (this.product.price * this.product.discount) / 100
+    );
+  }
 }
-
 ```
 
 ```html
@@ -113,53 +112,84 @@ export class ProductListComponent {
 <p>Original price: {{product.price}}</p>
 <p>Product color: {{product.color}}</p>
 <p>Discounted price: {{getDiscountedPrice()}}</p>
-
 ```
 
-
 #### Property Binding
+
 Property binding lets us bind a property of a DOM object, for example the hidden property, to some data value. This can let us show or hide a DOM element, or manipulate the DOM in some other way.
 
 Example:
+
 ```typescript
 export class ProductListComponent {
-    product = {
-        name: 'iPhone XR',
-        price: 789,
-        color: 'Black',
-        discount: 5.5,
-        pImage: '/assets/images/iphoneXR.png'
-    };
+  product = {
+    name: "iPhone XR",
+    price: 789,
+    color: "Black",
+    discount: 5.5,
+    pImage: "/assets/images/iphoneXR.png",
+  };
 
-    getDiscountedPrice(): number {
-        return this.product.price - (this.product.price * this.product.discount / 100);
-    }
+  getDiscountedPrice(): number {
+    return (
+      this.product.price - (this.product.price * this.product.discount) / 100
+    );
+  }
 }
-
 ```
 
 ```html
-
 <!-- we can do it with string interpolation like this -->
 <!-- <img src = {{product.pImage}}> -->
 
 <!-- we can do it with property binding like this
 Inside "" you can write any typescript expression -->
-<img [src] = "product.pImage">
-<img bind-src = "product.pImage">     <!-- Another syntax for property binding -->
+<img [src]="product.pImage" />
+<img bind-src="product.pImage" />
+<!-- Another syntax for property binding -->
 
 <p>Product name: {{product.name}}</p>
 <p>Original price: {{product.price}}</p>
 <p>Product color: {{product.color}}</p>
 <p>Discounted price: {{getDiscountedPrice()}}</p>
-
 ```
-
 
 Note: If we can do same stuff with string interpolation why do we need property binding?
 Ans: For html attributes like hidden, Disabled, Checked we need to use property binding only there string interpolation won't work.
 
+#### Event Binding
+
+In Angular, event binding is a mechanism that allows you to respond to user events, such as clicks, key presses, mouse movements, etc. It's a way to capture and handle events raised by the user or by other components in your application.
+
+For event binding wrap the event with (). Angular supports a variety of events such as (click), (keyup), (change), etc
+
+- Example
+
+```typescript
+export class AppComponent {
+  // Initial value for the dynamicName
+  dynamicName: string = "Not entered name";
+
+  // Method to be called on input change
+  onNameChange(newName: string): void {
+    // Update dynamicName with the new value
+    this.dynamicName = newName;
+  }
+}
+```
+
+```html
+<!-- Input tag with event binding for input event -->
+<input
+  placeholder="Enter your name"
+  (input)="onNameChange($event.target.value)"
+/>
+
+<!-- Paragraph with string interpolation -->
+<p>{{ dynamicName }}</p>
+```
+
 - Type 2: Two Way Data Binding
-Component to View View to Component
+  Component to View View to Component
 
 Two-way data binding binds data from component class to view template and view template to component class. It is a combination of property binding & event binding.
