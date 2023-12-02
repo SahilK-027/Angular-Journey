@@ -116,6 +116,49 @@ export class ProductListComponent {
 
 ```
 
+
+#### Property Binding
+Property binding lets us bind a property of a DOM object, for example the hidden property, to some data value. This can let us show or hide a DOM element, or manipulate the DOM in some other way.
+
+Example:
+```typescript
+export class ProductListComponent {
+    product = {
+        name: 'iPhone XR',
+        price: 789,
+        color: 'Black',
+        discount: 5.5,
+        pImage: '/assets/images/iphoneXR.png'
+    };
+
+    getDiscountedPrice(): number {
+        return this.product.price - (this.product.price * this.product.discount / 100);
+    }
+}
+
+```
+
+```html
+
+<!-- we can do it with string interpolation like this -->
+<!-- <img src = {{product.pImage}}> -->
+
+<!-- we can do it with property binding like this
+Inside "" you can write any typescript expression -->
+<img [src] = "product.pImage">
+<img bind-src = "product.pImage">     <!-- Another syntax for property binding -->
+
+<p>Product name: {{product.name}}</p>
+<p>Original price: {{product.price}}</p>
+<p>Product color: {{product.color}}</p>
+<p>Discounted price: {{getDiscountedPrice()}}</p>
+
+```
+
+
+Note: If we can do same stuff with string interpolation why do we need property binding?
+Ans: For html attributes like hidden, Disabled, Checked we need to use property binding only there string interpolation won't work.
+
 - Type 2: Two Way Data Binding
 Component to View View to Component
 
