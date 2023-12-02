@@ -244,7 +244,7 @@ Component: The most common type of directive. It allows you to create reusable, 
 
 2.  Structural Directives:
 
-    - *ngFor
+    - \*ngFor
       ngFor is a structural directive in Angular that is used for rendering a template for each item in a collection. It's commonly used for iterating over arrays or lists to generate dynamic content in the view.
 
     - Example:
@@ -296,6 +296,19 @@ Component: The most common type of directive. It allows you to create reusable, 
       ```
 
 3.  Attribute Directives:
+
+    -[ngStyle]
+
+    The ngStyle directive in Angular is another structural directive that allows you to dynamically set inline styles for HTML elements based on expressions in your component. It gives you the flexibility to conditionally apply styles depending on certain conditions or dynamic data.
+
+    - Example:
+
+    ```html
+    <!-- app.component.html -->
+    <div [ngStyle]="{ 'color': isConditionTrue ? 'green' : 'red' }">
+      {{isConditionTrue ? 'True' : 'False'}}
+    </div>
+    ```
 
 4.  Custom Directives:
 
