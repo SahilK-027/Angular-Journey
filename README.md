@@ -509,3 +509,28 @@ export class ExampleComponent implements OnChanges {
   }
 }
 ```
+
+#### ngOnInit Lifecycle Hook:
+The ngOnInit lifecycle hook in Angular is a method that is called after the Angular component has been initialized. It is part of the Angular component lifecycle and provides a hook for developers to perform initialization logic for the component.
+
+-Example
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<p>{{ message }}</p>',
+})
+export class ExampleComponent implements OnInit {
+  message: string;
+
+  ngOnInit(): void {
+    this.message = 'Component initialized';
+    // Perform other initialization tasks here
+  }
+}
+```
+
+In the example above, the ngOnInit hook is used to set the message property of the component to 'Component initialized'. This is a simple example, but in a real-world scenario, you might use this hook to make HTTP requests, set up subscriptions, or perform other tasks necessary for the component's operation.
+
+The ngOnInit hook is called once after the component is created, making it a suitable place for tasks that should happen only once during the component's lifecycle. Keep in mind that it is called after the constructor but before the ngOnChanges hook.
