@@ -488,22 +488,24 @@ In Angular, change detection is a mechanism that ensures the view reflects the c
   - Whenever an HTTP request is made.
 
 #### ngOnChanges Lifecycle Hook:
+
 In Angular, the ngOnChanges lifecycle hook is part of the lifecycle hooks that a component can implement. This hook is called whenever there is a change in the `input properties` of the component. It provides a way for the component to respond to changes in its input properties and take appropriate actions.
 
 - Ex.
+
 ```typescript
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 
 @Component({
-  selector: 'app-example',
-  template: '<p>{{ inputData }}</p>',
+  selector: "app-example",
+  template: "<p>{{ inputData }}</p>",
 })
 export class ExampleComponent implements OnChanges {
   @Input() inputData: string;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.inputData) {
-      console.log('InputData changed:', changes.inputData);
+      console.log("InputData changed:", changes.inputData);
       // Perform actions based on the changes to inputData
     }
   }
@@ -511,21 +513,23 @@ export class ExampleComponent implements OnChanges {
 ```
 
 #### ngOnInit Lifecycle Hook:
+
 The ngOnInit lifecycle hook in Angular is a method that is called after the Angular component has been initialized. It is part of the Angular component lifecycle and provides a hook for developers to perform initialization logic for the component.
 
 -Example
+
 ```typescript
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-example',
-  template: '<p>{{ message }}</p>',
+  selector: "app-example",
+  template: "<p>{{ message }}</p>",
 })
 export class ExampleComponent implements OnInit {
   message: string;
 
   ngOnInit(): void {
-    this.message = 'Component initialized';
+    this.message = "Component initialized";
     // Perform other initialization tasks here
   }
 }
@@ -534,3 +538,30 @@ export class ExampleComponent implements OnInit {
 In the example above, the ngOnInit hook is used to set the message property of the component to 'Component initialized'. This is a simple example, but in a real-world scenario, you might use this hook to make HTTP requests, set up subscriptions, or perform other tasks necessary for the component's operation.
 
 The ngOnInit hook is called once after the component is created, making it a suitable place for tasks that should happen only once during the component's lifecycle. Keep in mind that it is called after the constructor but before the ngOnChanges hook.
+
+#### ngDoCheck Lifecycle Hook:
+
+The ngDoCheck lifecycle hook in Angular provides a mechanism for developers to implement custom change detection for a component. Unlike other lifecycle hooks, ngDoCheck is called during every change detection cycle, giving you an opportunity to check for changes and perform custom logic.
+
+-Example:
+
+```typescript
+import { Component, DoCheck } from "@angular/core";
+
+@Component({
+  selector: "app-example",
+  template: "<p>{{ data }}</p>",
+})
+export class ExampleComponent implements DoCheck {
+  data: string = "Initial Data";
+
+  ngDoCheck(): void {
+    // Perform custom change detection logic
+    console.log("ngDoCheck triggered");
+  }
+}
+```
+
+Keep in mind that using ngDoCheck requires careful consideration, as it is called frequently. Overusing or performing heavy operations in this hook can have performance implications. It is often used in conjunction with the ChangeDetectorRef service to manually trigger change detection when needed.
+
+Typically, for most scenarios, Angular's default change detection is sufficient. However, ngDoCheck provides a way to implement custom change detection logic when necessary.
