@@ -604,29 +604,28 @@ In Angular, services are a way to organize and share code across components. The
 Below is a simple example of an Angular service that handles click events and logs a message to the console. In this example, we won't use dependency injection, and the service will be a plain JavaScript object.
 
 ```typescript
-// click-event.service.ts
+// subscribe-event.service.ts
 
-export const ClickEventService = {
-  clickCount: 0,
-  handleClick: function () {
-    this.clickCount++;
-    console.log(`Click event! Total clicks: ${this.clickCount}`);
-  },
+export class SubscribeService = {
+  onSubscribeClick(){
+    console.log('Thank you for subscription');
+  }
 };
 ```
 
-This service is a simple JavaScript object (ClickEventService) that contains a clickCount property to track the number of clicks and a handleClick method to log a message to the console whenever a click occurs.
+This service is a simple JavaScript object (SubscribeService) iyt contains onSubscribeClick method to log a message to the console whenever a click occurs.
 
 You can use this service in your components like this:
 
 ```typescript
 // example.component.ts
 
-import { ClickEventService } from "./click-event.service";
+import { SubscribeService } from "./click-event.service";
 
 export class ExampleComponent {
-  onClick() {
-    ClickEventService.handleClick();
+  onSubscribeClick() {
+    let subService = new SubscribeService();
+    subService.onSubscribeClick();
   }
 }
 ```
@@ -635,7 +634,41 @@ In your template:
 
 ```html
 <!-- example.component.html -->
-<button (click)="onClick()">Click me</button>
+<button (click)="onSubscribeClick()">Click me</button>
 ```
 
 Note: This example is intentionally simple and doesn't follow Angular's recommended practices for creating services using dependency injection. In a real Angular application, you would typically use Angular's dependency injection system to create services for better maintainability, testability, and flexibility.
+
+
+## Disadvantages of using simple Services & (Why to use Dependency Injection?)
+- Without dependency injection, a class (component) is tightly coupled with its dependency (service). This makes a class non-flexible. Any change in dependency forces us to change the class implementation.
+
+- It makes testing of class difficult. Because if the dependency changes, the class has to change. And when the class changes, the unit test mock code also has to change.
+
+
+- How to do the same above thing using Dependency Injection?
+
+You can use the service in your components like this:
+
+```typescript
+// example.component.ts
+
+import { SubscribeService } from "./click-event.service";
+
+@Component({
+  selector: '',
+  templateUrl: '',
+
+  // What to provide? 
+  providers: [SubscribeService]
+})
+export class ExampleComponent {
+  // How to provide dependency
+  constructor(private subService: SubscribeService){
+
+  }
+  onSubscribeClick() {
+    this.subService.onSubscribeClick();
+  }
+}
+```
