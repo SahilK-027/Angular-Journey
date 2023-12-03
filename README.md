@@ -453,3 +453,22 @@ In this example:
 
 - #myInput is a template reference variable assigned to the input element.
 - When the button is clicked, the (click) event triggers the logInputValue method in the component, passing the value of the input using myInput.value.
+
+## Components vs Directives
+
+| Feature              | Components                                                       | Directives                                  |
+| -------------------- | ---------------------------------------------------------------- | ------------------------------------------- |
+| **Definition**       | Represent a UI control or a view                                 | Extend the behavior of elements in the DOM  |
+| **Encapsulation**    | Have their own template, styles, and logic                       | Do not have their own template or styles    |
+| **Usage**            | Used as custom elements in templates                             | Used to change the behavior of elements     |
+| **Creation**         | Created using the `@Component` decorator                         | Created using the `@Directive` decorator    |
+| **Metadata**         | Use `@Component` metadata                                        | Use `@Directive` metadata                   |
+| **Selector**         | Identified by an HTML element selector                           | Identified by an attribute selector         |
+| **Template**         | Has its own template                                             | Can modify the template of the host element |
+| **Example**          | `<app-example></app-example>`                                    | `<div appExample></div>`                    |
+| **Controller/Class** | Has a class with properties and methods                          | Has a class with properties and methods     |
+| **Purpose**          | Encapsulate a behavior or feature                                | Add behavior or manipulate DOM elements     |
+| **Example Use Case** | Creating a login form component                                  | Creating a custom validation directive      |
+| **Two-Way Binding**  | Supports two-way data binding (via `ngModel`)                    | Typically used for one-way binding          |
+| **Lifecycle Hooks**  | Has a set of lifecycle hooks (e.g., `ngOnInit`, `ngOnChanges`)   | Can use lifecycle hooks but has fewer       |
+| **Communication**    | Can communicate with other components through services or events | Often used for DOM manipulation or styling  |
