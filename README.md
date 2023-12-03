@@ -565,3 +565,8 @@ export class ExampleComponent implements DoCheck {
 Keep in mind that using ngDoCheck requires careful consideration, as it is called frequently. Overusing or performing heavy operations in this hook can have performance implications. It is often used in conjunction with the ChangeDetectorRef service to manually trigger change detection when needed.
 
 Typically, for most scenarios, Angular's default change detection is sufficient. However, ngDoCheck provides a way to implement custom change detection logic when necessary.
+
+### Lifecycle hooks sequence
+<div align="center">
+<img width="472" alt="Screenshot 2023-12-03 at 11 02 00 AM" src="https://github.com/SahilK-027/Angular-Journey/assets/104154041/ecf440e1-02d5-4092-915b-27641dcc8161">
+</div>
