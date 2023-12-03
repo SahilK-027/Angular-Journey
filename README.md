@@ -472,3 +472,40 @@ In this example:
 | **Two-Way Binding**  | Supports two-way data binding (via `ngModel`)                    | Typically used for one-way binding          |
 | **Lifecycle Hooks**  | Has a set of lifecycle hooks (e.g., `ngOnInit`, `ngOnChanges`)   | Can use lifecycle hooks but has fewer       |
 | **Communication**    | Can communicate with other components through services or events | Often used for DOM manipulation or styling  |
+
+## Lifecycle Hooks in Angular
+
+In Angular, lifecycle hooks are methods that allow you to tap into the lifecycle of a component, directive, or service. These hooks provide points in the lifecycle where you can perform operations or respond to changes.
+
+### The change detection cycle
+
+In Angular, change detection is a mechanism that ensures the view reflects the current state of the application data. The change detection cycle is the process by which Angular determines what changes have occurred in the application state and updates the view accordingly. It's an essential part of Angular's architecture to maintain a responsive and synchronized user interface.
+
+- When change detection occurs?
+  - Whenever the @input property of a component changes
+  - Whenever a DOM event happens. E.g. Click or Change
+  - Whenever a timer events happens using setTimeOut () OR setInterval().
+  - Whenever an HTTP request is made.
+
+#### ngOnChanges Lifecycle Hook:
+In Angular, the ngOnChanges lifecycle hook is part of the lifecycle hooks that a component can implement. This hook is called whenever there is a change in the `input properties` of the component. It provides a way for the component to respond to changes in its input properties and take appropriate actions.
+
+- Ex.
+```typescript
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<p>{{ inputData }}</p>',
+})
+export class ExampleComponent implements OnChanges {
+  @Input() inputData: string;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.inputData) {
+      console.log('InputData changed:', changes.inputData);
+      // Perform actions based on the changes to inputData
+    }
+  }
+}
+```
