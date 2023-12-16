@@ -639,12 +639,11 @@ In your template:
 
 Note: This example is intentionally simple and doesn't follow Angular's recommended practices for creating services using dependency injection. In a real Angular application, you would typically use Angular's dependency injection system to create services for better maintainability, testability, and flexibility.
 
-
 ## Disadvantages of using simple Services & (Why to use Dependency Injection?)
+
 - Without dependency injection, a class (component) is tightly coupled with its dependency (service). This makes a class non-flexible. Any change in dependency forces us to change the class implementation.
 
 - It makes testing of class difficult. Because if the dependency changes, the class has to change. And when the class changes, the unit test mock code also has to change.
-
 
 - How to do the same above thing using Dependency Injection?
 
@@ -656,19 +655,123 @@ You can use the service in your components like this:
 import { SubscribeService } from "./click-event.service";
 
 @Component({
-  selector: '',
-  templateUrl: '',
+  selector: "",
+  templateUrl: "",
 
-  // What to provide? 
-  providers: [SubscribeService]
+  // What to provide?
+  providers: [SubscribeService],
 })
 export class ExampleComponent {
   // How to provide dependency
-  constructor(private subService: SubscribeService){
-
-  }
+  constructor(private subService: SubscribeService) {}
   onSubscribeClick() {
     this.subService.onSubscribeClick();
   }
 }
 ```
+
+# Angular testing with Jasmine Framework
+
+Jasmine is used to write the actual test cases for your Angular components, services, and other code.
+
+Karma is responsible for running these tests in a controlled environment, such as real browsers or headless browsers, and reporting the results.
+
+In the context of testing, a "specification" and a "test suite" are terms often associated with testing frameworks like Jasmine. Let's define each term:
+
+## Specification
+
+A specification refers to a single unit test or test case that describes a specific behavior or functionality of your code. A specification is typically defined using the it function in Jasmine.
+
+```typescript
+describe("MyComponent", () => {
+
+  // It block represents a specification
+  it("should do something when a condition is met", () => {
+    
+  });
+
+  it("should handle another scenario correctly", () => {
+
+  });
+});
+```
+## Test Suite
+
+A test suite is a collection of related test specifications or test cases. It is created using the describe function in Jasmine. A test suite helps organize and group related tests, making it easier to manage and run them.
+
+```typescript
+// Suit 1
+describe('MyComponent', () => {
+  it('should do something when a condition is met', () => {
+    // Test code goes here
+  });
+
+  it('should handle another scenario correctly', () => {
+    // Test code goes here
+  });
+});
+
+// Suit 2
+describe('AnotherComponent', () => {
+  it('should have a default value', () => {
+    // Test code goes here
+  });
+
+  it('should handle a specific event', () => {
+    // Test code goes here
+  });
+});
+```
+
+Note: How to create a component without spec file
+
+```bash
+ng g c Component --skip-tests
+```
+
+
+## Simple Test In Jasmine
+
+```typescript
+import {Injectable} from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+
+export class CalcService {
+  multiply(a: number, b: number): number {
+    return a * b;
+  }
+}
+```
+
+```typescript
+describe('Testing CalcService', () => {
+  it('Should correctly multiply two numbers', () => {
+    const calc = new CalcService();
+    const result = calc.multiply(3,4);
+    expect(result).toBe(3 * 4);
+  });
+});
+```
+
+## spyOn
+
+In Jasmine, the `spyOn` method is used to create spies, which are a way to mock or `spy on the behavior of functions, methods, or properties in your code` during testing. Spies are particularly useful for verifying that certain functions are called, checking the number of times they are called, and capturing the arguments passed to them. In the context of Angular testing, spyOn is commonly used with services, component methods, and external dependencies.
+
+- Syntax:
+```typescript
+spyOn(object, methodName)
+```
+object: The object that contains the method you want to spy on.
+methodName: The name of the method you want to spy on.
+
+Checking Method Arguments:
+
+Use `toHaveBeenCalledWith` to verify that a method was called with specific arguments.
+
+
+As spyOn takes two arguments one for object and other for method, for passing object we need to instantiate it and while instantiating the object the constructor is called automatically. So, to avoid calling the constructor we must avoid creating the actual instance of the object to pass to the spyOn method. How can we do that?
+
+Using `jasmine.createSpyObj("service/component", ["method"]);`
