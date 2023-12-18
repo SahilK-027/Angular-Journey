@@ -20,7 +20,7 @@ ng serve [project]  #[aliases: s]
 
 Angular CLI saves the compile Angular application in the memory & directly starts it. If we make any changes to our Angular app, Angular CLI will recompile & update the file. Angular CLI uses Webpack to traverse through our Angular app & it bundles IS & other files into one or more bundles. Then Angular CLI also injects the bundled JavaScript & CSS files in the index.html.
 
-When the index.html file is loaded, Angular core libraries & third party libraries are also loaded by that time. Now Angular needs to locate the main entry point.
+When the index.html file is loaded, Angular core libraries & third party libraries are also loaded by that time. Now Angular needs to locate the main entry point. So it analyzes angular.json (get the main file).
 
 ```json
 "options":{
@@ -33,6 +33,12 @@ When the index.html file is loaded, Angular core libraries & third party librari
 
 - Flow
   Angular Project -> index.html -> angular.json (get the main file) -> main.ts -> AppModule -> AppComponent -> View Template(app. component. html)
+
+## Types of Component Selector
+
+- Like HTML tag: selector : "app-nav"
+- Like HTML attribute: selector : "[app-nav]"
+- Like HTML class: selector : ".app-nav"
 
 ## Data Binding
 
@@ -67,6 +73,15 @@ export class MyComponent{
   </div>
 </div>
 ```
+
+### Advantages and disadvantages of angular over react.
+Angular: 
+- Two-way data binding by default using ngModel.
+- Angular's built-in dependency injection system makes it easier to manage and organize components, services, and other application parts.
+- Angular applications may have larger initial bundle sizes compared to React, which can impact page load times. However, Angular provides tools to optimize and reduce bundle sizes.
+- More strict and better error handling.
+
+Rect: Unidirectional data flow, but supports two-way binding using state management libraries (e.g., Redux).
 
 ### Types of Data Binding in Angular
 
@@ -191,10 +206,46 @@ export class AppComponent {
 <p>{{ dynamicName }}</p>
 ```
 
-- Type 2: Two Way Data Binding
+- Type 2: `Two Way Data Binding`
   Component to View View to Component
 
 Two-way data binding binds data from component class to view template and view template to component class. It is a combination of property binding & event binding.
+
+Two-way data binding in Angular is commonly achieved using [(ngModel)]. `ngModel` is the directive that provides two-way data binding in Angular forms.
+
+Ensure that you have the FormsModule imported in your Angular module. The FormsModule is required for using ngModel for two-way data binding.
+
+- Use [(ngModel)] in HTML:
+
+You can use [(ngModel)] within your template to create two-way data binding. It's often used in conjunction with form controls like input elements.
+
+```html
+<!-- app.component.html -->
+
+<input [(ngModel)]="username" placeholder="Enter your username" />
+
+<!-- The value of the input is bound to the 'username' property of the component -->
+```
+
+- Use in component
+
+In your component TypeScript file, you should have a property (e.g., username) that you bind to in the template.
+
+```typescript
+// app.component.ts
+
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
+})
+export class AppComponent {
+  // The 'username' property is bound to the input value using [(ngModel)]
+  username: string = "";
+}
+```
 
 #### Property Binding + Event Binding
 
@@ -354,11 +405,13 @@ You can create your own custom directives to encapsulate behavior and reuse it a
 
 ## Custom Property binding
 
-### Parent component to child component communication (use @input())
+### Parent component to child component communication (use @Input() decorator)
+
+#### @Input() Decorator
 
                     Custom property binding
 
-Parent Component ------------------------------------------------------------------> Child Compo
+Parent Component ---------------------------------------------------> Child Compo
 @Input() decorator
 
 Parent Compo
@@ -472,6 +525,31 @@ In this example:
 | **Two-Way Binding**  | Supports two-way data binding (via `ngModel`)                    | Typically used for one-way binding          |
 | **Lifecycle Hooks**  | Has a set of lifecycle hooks (e.g., `ngOnInit`, `ngOnChanges`)   | Can use lifecycle hooks but has fewer       |
 | **Communication**    | Can communicate with other components through services or events | Often used for DOM manipulation or styling  |
+
+## @ViewChild() in Angular
+
+The ViewChild decorator is used to query and get a reference of the DOM element in the component. It returns the first matching element.
+
+Apply the @ViewChild decorator to a property in your component class.
+
+```typescript
+@ViewChild(SomeComponent) someComponentRef: SomeComponent;
+```
+
+## ng-template
+
+```html
+<h2>Learn NG Template</h2>
+<ng-template #myTemplate>
+<h3>This is a template</h3>
+‹p›This is an example paragraph to understand ng-template</p>
+</ng-template>
+
+‹!--ngTemplate@Outlet Directive--›
+<div *ngTemplateOutlet="myTemplate"></₫iv> I
+```
+
+In this example, SomeComponent is the type of the child component you want to reference, and someComponentRef is the property that will hold the reference to the child component.
 
 ## Lifecycle Hooks in Angular
 
@@ -684,40 +762,36 @@ A specification refers to a single unit test or test case that describes a speci
 
 ```typescript
 describe("MyComponent", () => {
-
   // It block represents a specification
-  it("should do something when a condition is met", () => {
-    
-  });
+  it("should do something when a condition is met", () => {});
 
-  it("should handle another scenario correctly", () => {
-
-  });
+  it("should handle another scenario correctly", () => {});
 });
 ```
+
 ## Test Suite
 
 A test suite is a collection of related test specifications or test cases. It is created using the describe function in Jasmine. A test suite helps organize and group related tests, making it easier to manage and run them.
 
 ```typescript
 // Suit 1
-describe('MyComponent', () => {
-  it('should do something when a condition is met', () => {
+describe("MyComponent", () => {
+  it("should do something when a condition is met", () => {
     // Test code goes here
   });
 
-  it('should handle another scenario correctly', () => {
+  it("should handle another scenario correctly", () => {
     // Test code goes here
   });
 });
 
 // Suit 2
-describe('AnotherComponent', () => {
-  it('should have a default value', () => {
+describe("AnotherComponent", () => {
+  it("should have a default value", () => {
     // Test code goes here
   });
 
-  it('should handle a specific event', () => {
+  it("should handle a specific event", () => {
     // Test code goes here
   });
 });
@@ -729,16 +803,14 @@ Note: How to create a component without spec file
 ng g c Component --skip-tests
 ```
 
-
 ## Simple Test In Jasmine
 
 ```typescript
-import {Injectable} from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
-
 export class CalcService {
   multiply(a: number, b: number): number {
     return a * b;
@@ -747,10 +819,10 @@ export class CalcService {
 ```
 
 ```typescript
-describe('Testing CalcService', () => {
-  it('Should correctly multiply two numbers', () => {
+describe("Testing CalcService", () => {
+  it("Should correctly multiply two numbers", () => {
     const calc = new CalcService();
-    const result = calc.multiply(3,4);
+    const result = calc.multiply(3, 4);
     expect(result).toBe(3 * 4);
   });
 });
@@ -761,9 +833,11 @@ describe('Testing CalcService', () => {
 In Jasmine, the `spyOn` method is used to create spies, which are a way to mock or `spy on the behavior of functions, methods, or properties in your code` during testing. Spies are particularly useful for verifying that certain functions are called, checking the number of times they are called, and capturing the arguments passed to them. In the context of Angular testing, spyOn is commonly used with services, component methods, and external dependencies.
 
 - Syntax:
+
 ```typescript
-spyOn(object, methodName)
+spyOn(object, methodName);
 ```
+
 object: The object that contains the method you want to spy on.
 methodName: The name of the method you want to spy on.
 
@@ -771,7 +845,44 @@ Checking Method Arguments:
 
 Use `toHaveBeenCalledWith` to verify that a method was called with specific arguments.
 
-
 As spyOn takes two arguments one for object and other for method, for passing object we need to instantiate it and while instantiating the object the constructor is called automatically. So, to avoid calling the constructor we must avoid creating the actual instance of the object to pass to the spyOn method. How can we do that?
 
 Using `jasmine.createSpyObj("service/component", ["method"]);`
+
+## BeforeEach in jasmine
+
+In Jasmine, beforeEach is a function provided by the testing framework to set up preconditions or shared state before each test spec (it block) is executed. This is particularly useful for reducing redundancy in your test suite and ensuring a consistent starting point for each test.
+
+```typescript
+describe("My test suite", () => {
+  let sharedVariable;
+
+  // beforeEach is used to set up preconditions before each it block
+  beforeEach(() => {
+    // Initialization or setup code goes here
+    sharedVariable = 10;
+  });
+
+  it("should do something", () => {
+    // Test code that uses the sharedVariable
+    expect(sharedVariable).toBe(10);
+  });
+
+  it("should do something else", () => {
+    // Test code that also uses the sharedVariable
+    sharedVariable = 20;
+    expect(sharedVariable).toBe(20);
+  });
+});
+```
+
+You can use beforeEach to perform various setup tasks, such as initializing variables, creating objects, or setting up a test environment. It ensures that the specified code is executed before each test in the suite.
+
+`TestBud` : TestBed is a utility in Angular's testing infrastructure that is used to configure and create instances of components, services, and other Angular elements within a testing environment. It provides a testing module environment where you can configure the dependencies and settings for testing Angular components, services, and directives.
+
+```typescript
+TestBed.configureTestingModule({
+  declarations: [MyComponent],
+  providers: [MyService],
+});
+```
